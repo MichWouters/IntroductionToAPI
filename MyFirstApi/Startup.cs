@@ -2,11 +2,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MyFirstApi.MakingAPoint;
+using MyFirstApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +35,17 @@ namespace MyFirstApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyFirstApi", Version = "v1" });
             });
+
+            services.AddDbContext<AppContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
+            });
+
+            // Dependency Injection Configuration
+            services.AddTransient<IAppUserService, AppUserService>();
+            services.AddTransient<IRequiredClassA, RequiredClassA>();
+            services.AddTransient<IRequiredClassB, RequiredClassB>();
+            services.AddTransient<IMainClass, MainClass>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

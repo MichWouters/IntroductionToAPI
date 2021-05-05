@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MyFirstApi.MakingAPoint;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,12 @@ namespace MyFirstApi.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IMainClass _mainClass;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IMainClass mainClass)
         {
             _logger = logger;
+            _mainClass = mainClass;
         }
 
         [HttpGet]

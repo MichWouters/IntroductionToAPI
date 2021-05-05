@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using MyFirstApi.MakingAPoint;
 using MyFirstApi.Services;
 
 namespace MyFirstApi.Controllers
@@ -11,12 +13,15 @@ namespace MyFirstApi.Controllers
     [Route("[controller]")]
     public class UsersController: ControllerBase
     {
-        private AppUserService _service;
+        private IAppUserService _service;
+        private ILogger<UsersController> _logger;
+        private IMainClass _mainClass;
 
-        public UsersController()
+        public UsersController(IAppUserService service, IMainClass mainClass)
         {
-            // TODO: Use Dependency Injection
-            _service = new AppUserService();
+            // Dependency Injection
+            _service = service;
+            _mainClass = mainClass;
         }
 
         [HttpGet]

@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 
 namespace MyFirstApi.Services
 {
-    public class AppUserService
+    public class AppUserService : IAppUserService
     {
         private AppContext _context;
 
         public AppUserService(AppContext context)
         {
+            // Dependency Injection
             _context = context;
         }
 
