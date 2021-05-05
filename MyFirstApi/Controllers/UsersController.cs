@@ -20,21 +20,21 @@ namespace MyFirstApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<AppUser> Get()
+        public async Task<IEnumerable<AppUser>> GetAsync()
         {
-            return _service.GetUsers();
+            return  await _service.GetUsers();
         }
 
         [HttpGet("{id}")]
-        public AppUser GetUser(int id)
+        public async Task<AppUser> GetUserAsync(int id)
         {
-            return _service.GetUser(id);
+            return await _service.GetUser(id);
         }
 
         [HttpPost]
-        public void AddUser(AppUser user)
+        public async Task AddUserAsync(AppUser user)
         {
-            _service.AddUser(user);
+            await _service.AddUser(user);
         }
     }
 }

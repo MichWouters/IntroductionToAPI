@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,28 +7,27 @@ namespace MyFirstApi.Services
 {
     public class AppUserService
     {
-        private List<AppUser> _users = new List<AppUser>
-        {
-            new AppUser{ Id = 1, Name = "Michiel" },
-            new AppUser{ Id = 2, Name = "Kenny" },
-            new AppUser{ Id = 3, Name = "Stan" },
-            new AppUser{ Id = 4, Name = "Kyle" },
-            new AppUser{ Id = 5, Name = "Eric" },
-        };
+        private AppContext _context;
 
-        public List<AppUser> GetUsers()
+        public AppUserService(AppContext context)
         {
-            return _users;
+            _context = context;
         }
 
-        public void AddUser(AppUser user)
+        public async Task<List<AppUser>> GetUsers()
         {
-            _users.Add(user);
+            return await _context.Users.ToListAsync();
         }
 
-        public AppUser GetUser(int id)
+        public async Task AddUser(AppUser user)
         {
-            return _users.FirstOrDefault(x => x.Id == id);
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<AppUser> GetUser(int id)
+        {
+            return await _context.Users.FindAsync(id);
         }
     }
 }
