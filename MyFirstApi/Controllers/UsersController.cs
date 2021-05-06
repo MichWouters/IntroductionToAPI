@@ -14,14 +14,11 @@ namespace MyFirstApi.Controllers
     public class UsersController: ControllerBase
     {
         private IAppUserService _service;
-        private ILogger<UsersController> _logger;
-        private IMainClass _mainClass;
 
-        public UsersController(IAppUserService service, IMainClass mainClass)
+        public UsersController(IAppUserService service)
         {
             // Dependency Injection
             _service = service;
-            _mainClass = mainClass;
         }
 
         [HttpGet]
