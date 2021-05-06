@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using MyFirstApi.MakingAPoint;
 using MyFirstApi.Services;
 using System;
 using System.Collections.Generic;
@@ -43,9 +42,6 @@ namespace MyFirstApi
 
             // Dependency Injection Configuration
             services.AddTransient<IAppUserService, AppUserService>();
-            services.AddTransient<IRequiredClassA, RequiredClassA>();
-            services.AddTransient<IRequiredClassB, RequiredClassB>();
-            services.AddTransient<IMainClass, MainClass>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
