@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,9 +22,9 @@ namespace MyFirstApi.Services
                 .SingleOrDefaultAsync(x => x.Name == name);
 
             // Throw error if no user was found
-            // Bad practice: Flat out tells a hacker that this name does / does not exist
             if (user == null)
             {
+                // Bad practice: Flat out tells a hacker that this name does / does not exist
                 throw new UnauthorizedAccessException("Invalid username");
             }
 
@@ -35,12 +33,12 @@ namespace MyFirstApi.Services
             using var hmac = new HMACSHA512(user.PasswordSalt);
             var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-            // Bad practice: Flat out tells a hacker that this name does / does not exist
             for (int i = 0; i < hash.Length; i++)
             {
                 // Collections cannot be compared directly. We need to check their values.
                 if (hash[i] != user.PasswordHash[i])
                 {
+                    // Bad practice: Flat out tells a hacker that this name does / does not exist
                     throw new UnauthorizedAccessException("Invalid password");
                 }
             }
