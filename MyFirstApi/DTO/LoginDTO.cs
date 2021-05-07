@@ -2,7 +2,7 @@
 
 namespace MyFirstApi.DTO
 {
-    public class RegisterDTO
+    public class LoginDTO
     {
         [Required]
         public string Name { get; set; }

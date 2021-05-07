@@ -17,6 +17,37 @@ namespace MyFirstApi.Services
             _context = context;
         }
 
+        public async Task<AppUser> LoginAsync(string name, string password)
+        {
+            // Single throws exception if more than 1 object is found.
+            AppUser user = await _context.Users
+                .SingleOrDefaultAsync(x => x.Name == name);
+
+            // Throw error if no user was found
+            // Bad practice: Flat out tells a hacker that this name does / does not exist
+            if (user == null)
+            {
+                throw new UnauthorizedAccessException("Invalid username");
+            }
+
+            // if user was found, compare password hashes to verify correct password
+            // Hash password again with users personal salt to get same hash result.
+            using var hmac = new HMACSHA512(user.PasswordSalt);
+            var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+            // Bad practice: Flat out tells a hacker that this name does / does not exist
+            for (int i = 0; i < hash.Length; i++)
+            {
+                // Collections cannot be compared directly. We need to check their values.
+                if (hash[i] != user.PasswordHash[i])
+                {
+                    throw new UnauthorizedAccessException("Invalid password");
+                }
+            }
+
+            return user;
+        }
+
         public async Task<AppUser> RegisterAsync(string userName, string password)
         {
             using var hmac = new HMACSHA512();
