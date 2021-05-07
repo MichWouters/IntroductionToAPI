@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -23,7 +24,7 @@ namespace MyFirstApi.Services
             // Hash user password
             var user = new AppUser
             {
-                Name = userName,
+                Name = userName.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password)),
                 PasswordSalt = hmac.Key,
             };
@@ -32,6 +33,11 @@ namespace MyFirstApi.Services
             await _context.SaveChangesAsync();
 
             return user;
+        }
+
+        public async Task<bool> UserExists(string userName)
+        {
+            return await _context.Users.AnyAsync(x => x.Name == userName.ToLower());
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyFirstApi.DTO;
 using MyFirstApi.Services;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,18 @@ namespace MyFirstApi.Controllers
         public AccountController(IAccountService service)
         {
             _service = service;
+        }
+
+        [HttpPost("Register")]
+        public async Task<ActionResult<AppUser>> RegisterAsync(RegisterDTO dto)
+        {
+            if (await _service.UserExists(dto.Name))
+            {
+                return BadRequest("Username already exists");
+            }
+
+            var user = await _service.RegisterAsync(dto.Name, dto.Password);
+            return user;
         }
     }
 }
