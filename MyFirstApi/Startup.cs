@@ -40,8 +40,9 @@ namespace MyFirstApi
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
             });
 
-            // Dependency Injection Configuration
+            // Dependency Injection Configuration -> Make these services availble to be injected
             services.AddTransient<IAppUserService, AppUserService>();
+            services.AddTransient<IAccountService, AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
