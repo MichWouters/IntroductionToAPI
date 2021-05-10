@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MyFirstApi.DTO;
 using MyFirstApi.Services;
 
 namespace MyFirstApi.Controllers
@@ -35,6 +36,13 @@ namespace MyFirstApi.Controllers
         public async Task AddUserAsync(AppUser user)
         {
             await _service.AddUser(user);
+        }
+
+        [HttpGet("Member")]
+        public async Task<ActionResult<MemberDto>> GetMemberAsync(int id)
+        {
+            MemberDto member = await _service.GetMemberAsync(id);
+            return member;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyFirstApi.DTO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,6 +30,11 @@ namespace MyFirstApi.Services
         public async Task<AppUser> GetUser(int id)
         {
             return await _context.Users.FindAsync(id);
+        }
+
+        public Task<MemberDto> GetMemberAsync(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

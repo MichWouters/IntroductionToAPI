@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MyFirstApi.DTO;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MyFirstApi.Services
@@ -8,5 +9,6 @@ namespace MyFirstApi.Services
         Task AddUser(AppUser user);
         Task<AppUser> GetUser(int id);
         Task<List<AppUser>> GetUsers();
+        Task<MemberDto> GetMemberAsync(int id);
     }
 }

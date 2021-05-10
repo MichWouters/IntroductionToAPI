@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using MyFirstApi.DTO;
+using System.Threading.Tasks;
 
 namespace MyFirstApi.Services
 {

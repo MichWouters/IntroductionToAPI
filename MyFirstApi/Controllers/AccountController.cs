@@ -43,7 +43,6 @@ namespace MyFirstApi.Controllers
             {
                 return Unauthorized(e.Message);
             }
-            
         }
     }
 }
