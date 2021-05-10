@@ -1,18 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MyFirstApi.Helpers;
 using MyFirstApi.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyFirstApi
 {
@@ -28,7 +22,6 @@ namespace MyFirstApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddCors();
 
@@ -42,9 +35,12 @@ namespace MyFirstApi
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
             });
 
-            // Dependency Injection Configuration -> Make these services availble to be injected
-            services.AddTransient<IAppUserService, AppUserService>();
-            services.AddTransient<IAccountService, AccountService>();
+            // Register Automapper
+            services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+
+            // Dependency Injection Configuration -> Make these services available to be injected
+            services.AddScoped<IAppUserService, AppUserService>();
+            services.AddScoped<IAccountService, AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

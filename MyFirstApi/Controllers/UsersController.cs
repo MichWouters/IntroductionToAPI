@@ -9,7 +9,7 @@ using MyFirstApi.Services;
 namespace MyFirstApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UsersController: ControllerBase
     {
         private IAppUserService _service;
@@ -38,7 +38,7 @@ namespace MyFirstApi.Controllers
             await _service.AddUser(user);
         }
 
-        [HttpGet("Member")]
+        [HttpGet("Member/{id}")]
         public async Task<ActionResult<MemberDto>> GetMemberAsync(int id)
         {
             MemberDto member = await _service.GetMemberAsync(id);

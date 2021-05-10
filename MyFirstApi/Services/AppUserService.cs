@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyFirstApi.DTO;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,13 @@ namespace MyFirstApi.Services
     public class AppUserService : IAppUserService
     {
         private AppContext _context;
+        private IMapper _mapper;
 
-        public AppUserService(AppContext context)
+        public AppUserService(AppContext context, IMapper mapper)
         {
             // Dependency Injection
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<List<AppUser>> GetUsers()
@@ -29,12 +32,25 @@ namespace MyFirstApi.Services
 
         public async Task<AppUser> GetUser(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users
+                .Include(x => x.Photos)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<MemberDto> GetMemberAsync(int id)
+        public async Task<MemberDto> GetMemberAsync(int id)
         {
-            throw new System.NotImplementedException();
+            AppUser user = await this.GetUser(id);
+
+            // Bad practice. Use Automapper instead
+            //var member = new MemberDto
+            //{
+            //    City = user.City,
+            //    Gender = user.Gender,
+            //    Interests = user.Interests
+            //};
+
+            MemberDto member = _mapper.Map<MemberDto>(user);
+            return member;
         }
     }
 }
