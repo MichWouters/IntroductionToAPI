@@ -11,7 +11,11 @@ namespace MyFirstApi.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<AppUser, MemberDto>();
+            CreateMap<AppUser, MemberDto>()
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.CountryOfOrigin))
+                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom(
+                    src => src.Photos.FirstOrDefault(x => x.IsProfilePicture).Url))
+                .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
         }
     }
 }

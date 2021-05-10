@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyFirstApi.Helpers;
+using System;
 using System.Collections.Generic;
 
 namespace MyFirstApi
@@ -20,6 +21,8 @@ namespace MyFirstApi
         public string Interests { get; set; }
 
         public string City { get; set; }
+
+        public string CountryOfOrigin { get; set; }
 
         public DateTime Created { get; set; } = DateTime.Now;
 
