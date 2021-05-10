@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MyFirstApi.Helpers;
+using MyFirstApi.Repositories;
 using MyFirstApi.Services;
 
 namespace MyFirstApi
@@ -39,6 +40,7 @@ namespace MyFirstApi
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             // Dependency Injection Configuration -> Make these services available to be injected
+            services.AddScoped<IAppUserRepository, AppUserRepository>();
             services.AddScoped<IAppUserService, AppUserService>();
             services.AddScoped<IAccountService, AccountService>();
         }
