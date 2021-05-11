@@ -20,11 +20,14 @@ export class NavigationComponent implements OnInit {
       .subscribe(x => {
         // Happy path -> Database request was succesful
         this.loggedIn = true;
-        console.log(x);
       }, error => {
         // Error handling -> Something went wrong. Display message to user
         console.log(error);
       });
   }
 
+  logout(){
+    this.accountService.logout();
+    this.loggedIn = false;
+  }
 }
