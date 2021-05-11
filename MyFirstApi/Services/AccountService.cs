@@ -10,13 +10,15 @@ namespace MyFirstApi.Services
     public class AccountService : IAccountService
     {
         private AppContext _context;
+        private ITokenService _tokenService;
 
-        public AccountService(AppContext context)
+        public AccountService(AppContext context, ITokenService tokenService)
         {
             _context = context;
+            _tokenService = tokenService;
         }
 
-        public async Task<AppUser> LoginAsync(string name, string password)
+        public async Task<UserDto> LoginAsync(string name, string password)
         {
             // Single throws exception if more than 1 object is found.
             AppUser user = await _context.Users
@@ -44,10 +46,15 @@ namespace MyFirstApi.Services
                 }
             }
 
-            return user;
+            // Include token in Login & Register for easy access to restricted methods without having to authenticate
+            return new UserDto
+            {
+                UserName = user.Name,
+                Token = _tokenService.CreateToken(user),
+            };
         }
 
-        public async Task<AppUser> RegisterAsync(string userName, string password)
+        public async Task<UserDto> RegisterAsync(string userName, string password)
         {
             using var hmac = new HMACSHA512();
 
@@ -62,7 +69,12 @@ namespace MyFirstApi.Services
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return user;
+            // Include token in Login & Register for easy access to restricted methods without having to authenticate
+            return new UserDto
+            {
+                UserName = user.Name,
+                Token = _tokenService.CreateToken(user),
+            };
         }
 
         public async Task<bool> UserExists(string userName)
