@@ -21,8 +21,10 @@ namespace MyFirstApi.Tests
            
         }
 
-        [Test]
-        public async Task WhenGetMemberAsyncCalled_UserIsMappedToMemberDtoAsync()
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(12)]
+        public async Task WhenGetMemberAsyncCalled_UserIsMappedToMemberDtoAsync(int id)
         {
             // ARRANGE
             mockRepo = new Mock<IAppUserRepository>();
@@ -49,7 +51,7 @@ namespace MyFirstApi.Tests
            
 
             // ACT
-            MemberDto result = await service.GetMemberAsync(1);
+            MemberDto result = await service.GetMemberAsync(id);
 
             // ASSERT
             Assert.NotNull(result);
