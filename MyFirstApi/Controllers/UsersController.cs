@@ -41,11 +41,18 @@ namespace MyFirstApi.Controllers
             await _service.AddUser(user);
         }
 
-        [HttpGet("Member/{id}")]
+        [HttpGet("Members/{id}")]
         public async Task<ActionResult<MemberDto>> GetMemberAsync(int id)
         {
             MemberDto member = await _service.GetMemberAsync(id);
             return member;
+        }
+
+        [HttpGet("Members")]
+        public async Task<ActionResult<ICollection<MemberDto>>> GetMembersAsync()
+        {
+            List<MemberDto> members = await _service.GetMembersAsync();
+            return members;
         }
     }
 }

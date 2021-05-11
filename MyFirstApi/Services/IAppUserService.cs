@@ -10,5 +10,6 @@ namespace MyFirstApi.Services
         Task<AppUser> GetUser(int id);
         Task<List<AppUser>> GetUsers();
         Task<MemberDto> GetMemberAsync(int id);
+        Task<List<MemberDto>> GetMembersAsync();
     }
 }

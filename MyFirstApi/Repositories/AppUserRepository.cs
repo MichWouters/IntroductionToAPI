@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,8 +6,8 @@ namespace MyFirstApi.Repositories
 {
     public class AppUserRepository : IAppUserRepository
     {
-
         private AppContext _context;
+
         public AppUserRepository(AppContext context)
         {
             _context = context;
@@ -16,7 +15,9 @@ namespace MyFirstApi.Repositories
 
         public async Task<List<AppUser>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Include(x => x.Photos)
+                .ToListAsync();
         }
 
         public async Task AddUser(AppUser user)

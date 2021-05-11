@@ -31,11 +31,13 @@ export class AccountService {
     this.currentUser = user;
   }
 
-  // getCurrentUser(): User {
-  //   if (this.currentUser) {
-  //     return this.currentUser;
-  //   }
-  // }
+  getCurrentUser(): User | undefined {
+    if (this.currentUser) {
+      return this.currentUser;
+    }
+
+    return undefined;
+  }
 
   logout() {
     localStorage.removeItem('user');
