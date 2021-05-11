@@ -20,7 +20,7 @@ namespace MyFirstApi.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<AppUser>> RegisterAsync(RegisterDTO dto)
+        public async Task<ActionResult<UserDto>> RegisterAsync(RegisterDTO dto)
         {
             if (await _service.UserExists(dto.Name))
             {
@@ -32,11 +32,11 @@ namespace MyFirstApi.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<AppUser>> LoginAsync(LoginDTO dto)
+        public async Task<ActionResult<UserDto>> LoginAsync(LoginDTO dto)
         {
             try
             {
-                AppUser user = await _service.LoginAsync(dto.Name, dto.Password);
+                UserDto user = await _service.LoginAsync(dto.Name, dto.Password);
                 return user;
             }
             catch (UnauthorizedAccessException e)
