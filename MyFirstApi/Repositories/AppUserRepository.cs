@@ -16,7 +16,9 @@ namespace MyFirstApi.Repositories
 
         public async Task<List<AppUser>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Include(x => x.Photos)
+                .ToListAsync();
         }
 
         public async Task AddUser(AppUser user)
