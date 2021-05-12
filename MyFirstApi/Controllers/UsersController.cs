@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyFirstApi.DTO;
 using MyFirstApi.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyFirstApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
-    public class UsersController: ControllerBase
+
+    public class UsersController : ControllerBase
     {
         private IAppUserService _service;
 
@@ -24,28 +23,38 @@ namespace MyFirstApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IEnumerable<AppUser>> GetAsync()
+        public async Task<ActionResult<IEnumerable<AppUser>>> GetAsync()
         {
-            return  await _service.GetUsers();
+            var result = await _service.GetUsers();
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<AppUser> GetUserAsync(int id)
+        public async Task<ActionResult<AppUser>> GetUserAsync(int id)
         {
-            return await _service.GetUser(id);
+            var result = await _service.GetUser(id);
+            return Ok(result);
         }
 
         [HttpPost]
-        public async Task AddUserAsync(AppUser user)
+        public async Task<ActionResult> AddUserAsync(AppUser user)
         {
             await _service.AddUser(user);
+            return Created("", null);
         }
 
-        [HttpGet("Member/{id}")]
+        [HttpGet("Members/{id}")]
         public async Task<ActionResult<MemberDto>> GetMemberAsync(int id)
         {
             MemberDto member = await _service.GetMemberAsync(id);
-            return member;
+            return Ok(member);
+        }
+
+        [HttpGet("Members")]
+        public async Task<ActionResult<ICollection<MemberDto>>> GetMembersAsync()
+        {
+            ICollection<MemberDto> members = await _service.GetMembersAsync();
+            return Ok(members);
         }
     }
 }
