@@ -24,7 +24,7 @@ namespace MyFirstApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Jakkamakka()
+        public IEnumerable<WeatherForecast> GetWeatherForecasts()
         {
             var rng = new Random();
             return Enumerable.Range(1, 25).Select(index => new WeatherForecast
