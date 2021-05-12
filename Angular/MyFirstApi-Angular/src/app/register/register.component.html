@@ -2,35 +2,37 @@
 <form [formGroup]="registerUser" (ngSubmit)="register()" autocomplete="off">
     <h2 class="text-center text-primary">Sign up</h2>
     <div class="form-group">
-        
-        <input type="text" 
-            [class.is-invalid]="registerUser.get('username')?.errors 
-                                && registerUser.get('username')?.touched"
-            class="form-control" 
-            formControlName="username" 
+
+        <input type="text" [class.is-invalid]="registerUser.get('name')?.errors 
+                                && registerUser.get('name')?.touched" class="form-control" formControlName="name"
             placeholder="UserName" />
-            <div class="invalid-feedback">Please enter a username</div>
+        <div class="invalid-feedback">Please enter a username</div>
     </div>
 
     <div class="form-group">
-        <input type="password" 
-            [class.is-invalid]="registerUser.get('password')?.errors 
-                                 && registerUser.get('password')?.touched"
-            class="form-control" 
-            formControlName="password"  
-            placeholder="Password"/>
-            <div *ngIf="registerUser.get('password')?.hasError('required')"
-                  class="invalid-feedback">Please enter a password</div>
-            <div *ngIf="registerUser.get('password')?.hasError('minlength')"
-                  class="invalid-feedback">Please must be at least 4 characters</div>
-            <div *ngIf="registerUser.get('password')?.hasError('maxlength')"
-                  class="invalid-feedback">Please can not be longer than 8 characters</div>
+        <input type="password" [class.is-invalid]="registerUser.get('password')?.errors 
+                                 && registerUser.get('password')?.touched" class="form-control"
+            formControlName="password" placeholder="Password" />
+        <div *ngIf="registerUser.get('password')?.hasError('required')" class="invalid-feedback">Please enter a password
+        </div>
+        <div *ngIf="registerUser.get('password')?.hasError('minlength')" class="invalid-feedback">Please must be at
+            least 4 characters</div>
+        <div *ngIf="registerUser.get('password')?.hasError('maxlength')" class="invalid-feedback">Please can not be
+            longer than 8 characters</div>
+
+        <div *ngIf="validationErrors.length > 0">
+            <ul class="text-danger">
+                <li *ngFor="let error of validationErrors">
+                    {{ error }}
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div class="form-group text-center">
         <button class="btn btn-success mr-2" type="submit">Register</button>
+
+        <p>Form value: {{ registerUser.value | json }}</p>
+        <p>Form status: {{ registerUser.status | json }}</p>
     </div>
 </form>
-
-<p>Form value: {{ registerUser.value | json }}</p>
-<p>Form status: {{ registerUser.status | json }}</p>

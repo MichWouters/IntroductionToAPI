@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../User';
 import { map } from 'rxjs/operators';
+import { Register } from '../Register';
 
 
 @Injectable({
@@ -28,15 +29,22 @@ export class AccountService {
     );
   }
 
+  register(model: Register): Observable<any> {
+    let url = 'https://localhost:44388/api/Account/Register';
+    return this.httpClient.post(url, model).pipe(
+      map((response: any) => {
+        const user: User = response;
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.setCurrentUser(user);
+        }
+      })
+    );
+  }
+
   setCurrentUser(user: User) {
     this.currentUser = user;
   }
-
-  // getCurrentUser(): User {
-  //   if (this.currentUser) {
-  //     return this.currentUser;
-  //   }
-  // }
 
   logout() {
     localStorage.removeItem('user');
