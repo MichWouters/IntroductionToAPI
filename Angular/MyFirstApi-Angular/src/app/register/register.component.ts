@@ -14,10 +14,12 @@ export class RegisterComponent implements OnInit {
     Validators.minLength(4), Validators.maxLength(8)])
   });
 
+  validationErrors: string[] = [];
+
   constructor(private accountService: AccountService) { }
 
   register(){
-    console.log(this.registerUser.value);
+    this.accountService.register(this.registerUser.value);
   }
 
 
