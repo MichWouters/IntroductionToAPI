@@ -33,7 +33,6 @@ namespace MyFirstApi.Services
             return await _repo.GetUser(id);
         }
 
-        
         public async Task<MemberDto> GetMemberAsync(int id)
         {
             // Bad practice. Use Automapper instead
@@ -46,6 +45,13 @@ namespace MyFirstApi.Services
             AppUser user = await _repo.GetUser(id);
             MemberDto member = _mapper.Map<MemberDto>(user);
             return member;
+        }
+
+        public async Task<ICollection<MemberDto>> GetMembersAsync()
+        {
+            List<AppUser> users = await _repo.GetUsers();
+            List<MemberDto> members = _mapper.Map<List<MemberDto>>(users);
+            return members;
         }
     }
 }
