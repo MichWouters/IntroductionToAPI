@@ -28,7 +28,8 @@ namespace MyFirstApi.Controllers
             }
 
             var user = await _service.RegisterAsync(dto.Name, dto.Password);
-            return user;
+            //return user;
+            return Created("", user);
         }
 
         [HttpPost("Login")]
@@ -37,7 +38,7 @@ namespace MyFirstApi.Controllers
             try
             {
                 UserDto user = await _service.LoginAsync(dto.Name, dto.Password);
-                return user;
+                return Ok(user);
             }
             catch (UnauthorizedAccessException e)
             {
