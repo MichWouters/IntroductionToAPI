@@ -8,6 +8,8 @@ namespace MyFirstApi.DTO
         public string Name { get; set; }
 
         [Required]
+        [MinLength(4)]
+        [MaxLength(8)]
         public string Password { get; set; }
     }
 }
