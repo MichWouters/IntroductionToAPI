@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../User';
 import { map } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
+
   baseUrl = 'https://localhost:44388/api/account';
   currentUser?: User;
 
@@ -26,6 +28,11 @@ export class AccountService {
         }
       })
     );
+  }
+
+  register(registerUser) {
+    debugger;
+    return this.httpClient.post(this.baseUrl + '/register', registerUser);
   }
 
   setCurrentUser(user: User) {
