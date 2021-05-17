@@ -22,9 +22,10 @@ export class RegisterComponent implements OnInit {
     this.accountService.register(this.registerUser.value).subscribe(response => {
 
     }, error => {
-      debugger;
       console.log(error);
       this.validationErrors = error.error.errors;
+
+      // TODO: Add errors to validation errors so they can be displayed
       
     });
   }
